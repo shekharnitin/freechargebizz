@@ -7,7 +7,7 @@ import ProcessingPage from "./pages/ProcessingPage";
 import RecommendationsPage from "./pages/RecommendationsPage";
 import { BUSINESS_STEPS } from "./data/businessSteps";
 import { PERSONAL_STEPS } from "./data/personalSteps";
-import { BUSINESS_CARDS, PERSONAL_CARDS } from "./data/cardCatalog";
+import { getRecommendations } from "./engine/recommend";
 
 export default function App() {
   const [dark, setDark] = useState(false);
@@ -15,6 +15,7 @@ export default function App() {
   const [screen, setScreen] = useState("landing"); // landing | form | processing | results
   const [formStep, setFormStep] = useState(0);
   const [formData, setFormData] = useState({ monthlySpend: 150000, sectors: [] });
+  const [recommendedCards, setRecommendedCards] = useState([]);
 
   // Reset form when mode changes
   useEffect(() => {
@@ -24,7 +25,12 @@ export default function App() {
   }, [mode]);
 
   const steps = mode === "business" ? BUSINESS_STEPS : PERSONAL_STEPS;
-  const cards = mode === "business" ? BUSINESS_CARDS : PERSONAL_CARDS;
+
+  const handleProcessingDone = () => {
+    const cards = getRecommendations(formData, mode);
+    setRecommendedCards(cards);
+    setScreen("results");
+  };
 
   return (
     <div style={{ fontFamily: "'Hanken Grotesk', sans-serif", background: dark ? T.darkBg : T.surface }}>
@@ -52,10 +58,10 @@ export default function App() {
         />
       )}
       {screen === "processing" && (
-        <ProcessingPage dark={dark} onDone={() => setScreen("results")} />
+        <ProcessingPage dark={dark} onDone={handleProcessingDone} />
       )}
       {screen === "results" && (
-        <RecommendationsPage dark={dark} cards={cards} />
+        <RecommendationsPage dark={dark} cards={recommendedCards} />
       )}
     </div>
   );

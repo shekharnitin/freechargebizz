@@ -110,8 +110,9 @@ export default function RecommendationsPage({ dark, cards }) {
       </div>
 
       {/* Card Details */}
-      <div className="fade-up" key={active} style={{ margin: "0 auto", maxWidth: 760, padding: "0 80px" }}>
+      <div className="fade-up" key={active} style={{ display: "flex", justifyContent: "center", padding: "0 80px" }}>
         <div style={{
+          width: "100%", maxWidth: 860,
           background: cardBg,
           border: `1px solid ${borderC}`,
           borderRadius: 20, overflow: "hidden",
@@ -125,7 +126,7 @@ export default function RecommendationsPage({ dark, cards }) {
             pointerEvents: "none",
           }} />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 0 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 0 }}>
             {/* Left pane */}
             <div style={{ padding: "36px 40px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
@@ -181,7 +182,7 @@ export default function RecommendationsPage({ dark, cards }) {
 
             {/* Right pane */}
             <div style={{
-              width: 240, padding: "36px 28px",
+              padding: "36px 32px",
               background: dark ? T.darkSurfaceHigh : T.surfaceLow,
               borderLeft: `1px solid ${borderC}`,
               display: "flex", flexDirection: "column", alignItems: "center", gap: 20, textAlign: "center",
@@ -196,7 +197,7 @@ export default function RecommendationsPage({ dark, cards }) {
                 <div style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 17, color: fg, marginBottom: 6 }}>
                   <span style={{ color: card.approvalColor }}>{card.approval}</span> Approval Odds
                 </div>
-                <p style={{ fontSize: 12, color: dark ? "#888" : T.outline, lineHeight: 1.5 }}>Based on your Experian credit profile.</p>
+                <p style={{ fontSize: 12, color: dark ? "#888" : T.outline, lineHeight: 1.5 }}>Based on your credit profile.</p>
               </div>
               <button className="btn-primary" style={{ width: "100%" }}>Apply Now →</button>
               <button className="btn-secondary" style={{ width: "100%" }}>View Full Details</button>

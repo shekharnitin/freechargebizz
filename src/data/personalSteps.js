@@ -6,6 +6,7 @@ export const PERSONAL_STEPS = [
     fields: [
       { id: "employmentType", label: "Employment Type", type: "chips", options: ["Salaried", "Self-Employed"] },
       { id: "annualIncome", label: "What is your annual income?", type: "slider", min: 200000, max: 5000000, step: 100000, format: (v) => `₹${(v / 100000).toFixed(1)}L` },
+      { id: "creditScore", label: "What is your credit score range?", type: "chips", options: ["Excellent (750+)", "Good (700–750)", "Fair (650–700)", "Building Credit (<650)", "Not Sure"] },
     ],
   },
   {

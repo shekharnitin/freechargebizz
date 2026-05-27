@@ -1,6 +1,12 @@
+import { useState, useEffect } from "react";
 import { T } from "../tokens";
 
 export default function FormPage({ dark, step, setStep, formData, setFormData, onSubmit, steps }) {
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setError("");
+  }, [step, formData]);
   const bg = dark ? T.darkBg : T.surfaceLow;
   const cardBg = dark ? T.darkSurface : "#fff";
   const fg = dark ? T.darkOnSurface : T.onSurface;
@@ -19,6 +25,25 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
     } else if (cur.length < 2) {
       update("sectors", [...cur, label]);
     }
+  }
+
+  function handleContinue() {
+    for (const field of cur.fields) {
+      if (field.type === "chips" && !formData[field.id]) {
+        setError(`Please select an option for: ${field.label}`);
+        return;
+      }
+      if (field.type === "sector-grid" && (!formData.sectors || formData.sectors.length === 0)) {
+        setError(`Please select at least one sector.`);
+        return;
+      }
+      if (field.type === "reward-grid" && !formData.rewardPref) {
+        setError(`Please select a reward preference.`);
+        return;
+      }
+    }
+    if (step < steps.length - 1) setStep(s => s + 1);
+    else onSubmit();
   }
 
   return (
@@ -157,12 +182,12 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
             {step > 0 ? (
               <button className="btn-secondary" onClick={() => setStep(s => s - 1)}>← Back</button>
             ) : <div />}
-            <button className="btn-primary" onClick={() => {
-              if (step < steps.length - 1) setStep(s => s + 1);
-              else onSubmit();
-            }}>
-              {step < steps.length - 1 ? "Continue →" : "Find My Cards →"}
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              {error && <span style={{ color: T.secondary, fontSize: 13, fontWeight: 600 }}>{error}</span>}
+              <button className="btn-primary" onClick={handleContinue}>
+                {step < steps.length - 1 ? "Continue →" : "Find My Cards →"}
+              </button>
+            </div>
           </div>
         </div>
 
