@@ -22,7 +22,7 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
     const cur = formData.sectors || [];
     if (cur.includes(label)) {
       update("sectors", cur.filter(s => s !== label));
-    } else if (cur.length < 2) {
+    } else if (cur.length < 3) {
       update("sectors", [...cur, label]);
     }
   }

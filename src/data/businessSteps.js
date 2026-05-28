@@ -15,10 +15,17 @@ export const BUSINESS_STEPS = [
     subtitle: "Help us tailor the perfect card recommendations by sharing a bit about your business habits.",
     fields: [
       { id: "monthlySpend", label: "What is your average monthly expenditure?", type: "slider", min: 10000, max: 500000, step: 5000, format: (v) => `₹${(v / 100000).toFixed(1)}L` },
-      { id: "sectors", label: "Which sector do you spend the most on?", subtitle: "Select up to 2 primary categories.", type: "sector-grid", options: [
-        { label: "Travel", icon: "✈️" }, { label: "Food & Dining", icon: "🍽️" }, { label: "Fuel", icon: "⛽" },
-        { label: "Shopping", icon: "🛍️" }, { label: "Health & Wellness", icon: "🛡️" }, { label: "Tech & IT", icon: "💻" },
-      ]},
+      { id: "sectors", label: "Where do you spend the most? (Select up to 3)", type: "sector-grid", options: [
+        { label: "Travel", icon: "✈️" },
+        { label: "Dining", icon: "🍽️" },
+        { label: "Shopping", icon: "🛍️" },
+        { label: "Groceries", icon: "🛒" },
+        { label: "Online Shopping", icon: "💻" },
+        { label: "Utilities & Bills", icon: "💡" },
+        { label: "Fuel", icon: "⛽" },
+        { label: "Entertainment", icon: "🎬" },
+        { label: "Health & Wellness", icon: "🛡️" }
+      ] },
     ],
   },
   {

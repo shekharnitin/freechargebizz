@@ -262,6 +262,16 @@ export default function RecommendationsPage({ dark, cards }) {
               )}
             </ul>
             
+            {card.netValue !== undefined && (
+              <div style={{ marginTop: 24, padding: "16px 20px", background: `linear-gradient(135deg, ${dark ? "rgba(176,40,72,0.15)" : "#fff0f3"}, ${dark ? T.darkSurfaceHigh : T.surfaceLow})`, borderRadius: 12, border: `1px solid ${borderC}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: T.primaryCont, letterSpacing: "0.05em" }}>ESTIMATED NET ANNUAL VALUE</div>
+                  <div style={{ fontSize: 11, color: dark ? "#888" : T.outline, marginTop: 4 }}>Based on your selected spends and preferences</div>
+                </div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: fg }}>₹{card.netValue.toLocaleString("en-IN")}</div>
+              </div>
+            )}
+            
             <div style={{ display: "flex", marginTop: 32 }}>
               <button className="btn-primary" style={{ width: "100%" }} onClick={() => setShowModal(false)}>Apply Now</button>
             </div>
