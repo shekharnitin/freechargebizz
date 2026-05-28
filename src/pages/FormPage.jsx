@@ -47,7 +47,7 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
   }
 
   return (
-    <div style={{ background: bg, minHeight: "calc(100vh - 60px)", padding: "48px 80px", display: "flex", justifyContent: "center" }}>
+    <div className="page-container" style={{ background: bg, minHeight: "calc(100vh - 60px)", display: "flex", justifyContent: "center" }}>
       <div style={{ width: "100%", maxWidth: 760 }}>
         {/* Progress */}
         <div style={{ marginBottom: 36 }}>
@@ -67,10 +67,10 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
         </div>
 
         {/* Card */}
-        <div className="scale-in" key={step} style={{
+        <div className="scale-in card-padding" key={step} style={{
           background: cardBg,
           border: `1px solid ${borderC}`,
-          borderRadius: 20, padding: "48px 52px",
+          borderRadius: 20,
           boxShadow: dark ? "0 4px 40px rgba(0,0,0,0.4)" : "0 4px 40px rgba(0,0,0,0.06)",
         }}>
           <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 700, fontSize: 28, color: fg, marginBottom: 10 }}>{cur.title}</h2>
@@ -124,7 +124,7 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
               )}
 
               {field.type === "sector-grid" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+                <div className="grid-3-col">
                   {field.options.map(opt => {
                     const sel = (formData.sectors || []).includes(opt.label);
                     return (
@@ -149,7 +149,7 @@ export default function FormPage({ dark, step, setStep, formData, setFormData, o
               )}
 
               {field.type === "reward-grid" && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                <div className="grid-form-rewards">
                   {field.options.map(opt => {
                     const sel = formData.rewardPref === opt.label;
                     return (

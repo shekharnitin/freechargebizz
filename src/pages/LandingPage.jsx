@@ -9,12 +9,11 @@ export default function LandingPage({ dark, onStart }) {
   const borderC = dark ? T.darkOutline : T.outlineVar;
 
   return (
-    <div style={{ background: bg, color: fg, minHeight: "100vh" }}>
+    <div className="page-container" style={{ background: bg, minHeight: "calc(100vh - 60px)" }}>
       {/* Hero */}
-      <section style={{
-        padding: "80px 80px 100px",
-        display: "grid", gridTemplateColumns: "1fr 1fr",
-        gap: 60, alignItems: "center",
+      <section className="header-padding grid-2-col" style={{
+        paddingBottom: 100,
+        alignItems: "center",
         background: dark
           ? "linear-gradient(135deg, #111214 0%, #1a1215 50%, #111214 100%)"
           : "linear-gradient(135deg, #f7f9fc 0%, #fff5f0 50%, #f7f9fc 100%)",
@@ -66,14 +65,14 @@ export default function LandingPage({ dark, onStart }) {
       </section>
 
       {/* How It Works */}
-      <section style={{ background: dark ? T.darkSurface : "#fff", padding: "80px 80px" }}>
+      <section className="page-container" style={{ background: dark ? T.darkSurface : "#fff" }}>
         <div style={{ textAlign: "center", marginBottom: 56 }}>
           <h2 style={{ fontSize: 28, fontWeight: 800, letterSpacing: "0.05em", color: dark ? T.darkOnSurface : T.onSurface }}>
             HOW IT WORKS
           </h2>
           <p style={{ marginTop: 10, color: dark ? "#888" : T.outline, fontSize: 15 }}>Simplified, elegant card recommendation quiz</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}>
+        <div className="grid-3-col">
           {[
             { n: 1, title: "TELL US YOUR NEEDS", icons: ["✉️", "✈️", "💰", "📈"], desc: "Personal Spend · Business Travel · Cashback · Grow Business" },
             { n: 2, title: "GET MATCHED", visual: "spinner", desc: "Our engine analyses 50+ parameters to find your best match" },
@@ -98,7 +97,7 @@ export default function LandingPage({ dark, onStart }) {
               }}>{step.n}</div>
               <div style={{ fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", color: dark ? T.darkOnSurface : T.onSurface }}>{step.title}</div>
               {step.icons && (
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, width: "100%" }}>
+                <div className="grid-2-col" style={{ marginTop: 40 }}>
                   {step.icons.map((ic, j) => (
                     <div key={j} style={{
                       background: dark ? T.darkSurfaceHigh : "#fff",
@@ -133,8 +132,8 @@ export default function LandingPage({ dark, onStart }) {
       </section>
 
       {/* Features Grid */}
-      <section style={{ padding: "80px 80px", background: dark ? T.darkBg : T.surface }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <section className="page-container" style={{ background: dark ? T.darkBg : T.surface }}>
+        <div className="grid-2-col">
           {[
             { title: "PERSONALIZED FOR YOU & YOUR BIZ", icon: "👤", content: "Smart profiling that matches your spending patterns with the right rewards." },
             { title: "POWERED BY AXIS BANK", icon: "🏦", content: "Institutional trust of Axis Bank with the agility of Freecharge.", tag: "AXIS BANK" },
@@ -181,7 +180,7 @@ export default function LandingPage({ dark, onStart }) {
       </section>
 
       {/* Testimonial */}
-      <section style={{ padding: "0 80px 80px", background: dark ? T.darkBg : T.surface }}>
+      <section style={{ padding: "0 5%", paddingBottom: 80, background: dark ? T.darkBg : T.surface }}>
         <div style={{
           background: dark ? T.darkSurface : "#fff",
           border: `1px solid ${borderC}`,
@@ -205,11 +204,11 @@ export default function LandingPage({ dark, onStart }) {
       </section>
 
       {/* CTA Banner */}
-      <section style={{ margin: "0 80px 80px", borderRadius: 20, overflow: "hidden" }}>
+      <section style={{ margin: "0 5% 80px", borderRadius: 20, overflow: "hidden" }}>
         <div style={{
           background: `linear-gradient(135deg, ${T.secondary} 0%, #8b001e 100%)`,
-          padding: "56px 60px",
-          display: "flex", alignItems: "center", gap: 60,
+          padding: "56px 8%",
+          display: "flex", flexWrap: "wrap", alignItems: "center", gap: 60,
         }}>
           <div style={{ flexShrink: 0, transform: "rotate(-10deg)" }}>
             <CreditCardSVG gradient={["#ff6d2e", "#ffa500"]} label="Bizz Gold" />

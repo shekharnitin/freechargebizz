@@ -20,7 +20,7 @@ export default function RecommendationsPage({ dark, cards }) {
   return (
     <div style={{ background: bg, minHeight: "calc(100vh - 60px)", paddingBottom: 80 }}>
       {/* Header */}
-      <div style={{ textAlign: "center", padding: "48px 80px 0" }}>
+      <div className="header-padding" style={{ textAlign: "center" }}>
         <div style={{
           display: "inline-flex", padding: "8px 20px", borderRadius: 9999,
           background: dark ? T.darkSurface : T.surfaceCont,
@@ -39,9 +39,9 @@ export default function RecommendationsPage({ dark, cards }) {
       </div>
 
       {/* 3D Carousel */}
-      <div style={{ position: "relative", height: 320, margin: "40px 0", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div className="carousel-wrapper">
         {/* Left arrow */}
-        <button onClick={() => move(-1)} style={{
+        <button className="carousel-arrow" onClick={() => move(-1)} style={{
           position: "absolute", left: 80, zIndex: 10,
           width: 44, height: 44, borderRadius: "50%",
           background: dark ? T.darkSurfaceHigh : "#fff",
@@ -56,26 +56,23 @@ export default function RecommendationsPage({ dark, cards }) {
         >‹</button>
 
         {/* Cards */}
-        <div style={{ position: "relative", width: 700, height: 260, perspective: "1200px" }}>
+        <div className="carousel-container">
           {cards.map((c, i) => {
             const offset = i - active;
             const norm = ((offset % cards.length) + cards.length) % cards.length;
             const pos = norm <= cards.length / 2 ? norm : norm - cards.length;
             const isCenter = pos === 0;
             const scale = isCenter ? 1 : 0.82;
-            const rotateY = pos * 28;
-            const tx = pos * 180;
             const opacity = Math.abs(pos) <= 1 ? 1 - Math.abs(pos) * 0.3 : 0;
             const blur = isCenter ? 0 : Math.abs(pos) * 2;
             return (
-              <div key={i} onClick={() => isCenter ? setShowModal(true) : setActive(i)} style={{
-                position: "absolute", left: "50%", top: "50%",
-                transform: `translate(-50%, -50%) translateX(${tx}px) rotateY(${rotateY}deg) scale(${scale})`,
-                transition: "all 0.5s cubic-bezier(0.25,0.46,0.45,0.94)",
-                opacity, filter: `blur(${blur}px)`,
-                zIndex: isCenter ? 10 : 5 - Math.abs(pos),
-                cursor: "pointer",
-                transformStyle: "preserve-3d",
+              <div key={i} className="carousel-card" onClick={() => isCenter ? setShowModal(true) : setActive(i)} style={{
+                "--pos": pos,
+                "--scale": scale,
+                "--opacity": opacity,
+                "--blur": `${blur}px`,
+                "--z-index": isCenter ? 10 : 5 - Math.abs(pos),
+                "--cursor": "pointer"
               }}>
                 <CreditCardSVG gradient={c.gradient} label={c.name} />
               </div>
@@ -84,7 +81,7 @@ export default function RecommendationsPage({ dark, cards }) {
         </div>
 
         {/* Right arrow */}
-        <button onClick={() => move(1)} style={{
+        <button className="carousel-arrow" onClick={() => move(1)} style={{
           position: "absolute", right: 80, zIndex: 10,
           width: 44, height: 44, borderRadius: "50%",
           background: dark ? T.darkSurfaceHigh : "#fff",
@@ -112,7 +109,7 @@ export default function RecommendationsPage({ dark, cards }) {
       </div>
 
       {/* Card Details */}
-      <div className="fade-up" key={active} style={{ display: "flex", justifyContent: "center", padding: "0 80px" }}>
+      <div className="fade-up" key={active} style={{ display: "flex", justifyContent: "center", padding: "0 5%" }}>
         <div style={{
           width: "100%", maxWidth: 860,
           background: cardBg,
@@ -128,7 +125,7 @@ export default function RecommendationsPage({ dark, cards }) {
             pointerEvents: "none",
           }} />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 0 }}>
+          <div className="grid-recommendation-details">
             {/* Left pane */}
             <div style={{ padding: "36px 40px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
@@ -238,7 +235,7 @@ export default function RecommendationsPage({ dark, cards }) {
             <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, color: fg, marginBottom: 8 }}>{card.name}</h2>
             <p style={{ color: dark ? "#aaa" : T.onSurfaceVar, marginBottom: 24 }}>Full Features & Specifications</p>
             
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
+            <div className="grid-modal-stats" style={{ marginBottom: 32 }}>
                 <div style={{ background: dark ? T.darkSurfaceHigh : T.surfaceLow, padding: 16, borderRadius: 12 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: T.outline, marginBottom: 4 }}>ANNUAL FEE</div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: fg }}>{card.fee}</div>
