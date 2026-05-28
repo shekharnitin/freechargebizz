@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 
 export default function RecommendationsPage({ dark, cards }) {
   const [active, setActive] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const bg = dark ? T.darkBg : T.surface;
   const fg = dark ? T.darkOnSurface : T.onSurface;
   const cardBg = dark ? T.darkSurface : "#fff";
@@ -66,13 +67,13 @@ export default function RecommendationsPage({ dark, cards }) {
             const opacity = Math.abs(pos) <= 1 ? 1 - Math.abs(pos) * 0.3 : 0;
             const blur = isCenter ? 0 : Math.abs(pos) * 2;
             return (
-              <div key={i} onClick={() => setActive(i)} style={{
+              <div key={i} onClick={() => isCenter ? setShowModal(true) : setActive(i)} style={{
                 position: "absolute", left: "50%", top: "50%",
                 transform: `translate(-50%, -50%) translateX(${tx}px) rotateY(${rotateY}deg) scale(${scale})`,
                 transition: "all 0.5s cubic-bezier(0.25,0.46,0.45,0.94)",
                 opacity, filter: `blur(${blur}px)`,
                 zIndex: isCenter ? 10 : 5 - Math.abs(pos),
-                cursor: isCenter ? "default" : "pointer",
+                cursor: "pointer",
                 transformStyle: "preserve-3d",
               }}>
                 <CreditCardSVG gradient={c.gradient} label={c.name} />
@@ -200,7 +201,7 @@ export default function RecommendationsPage({ dark, cards }) {
                 <p style={{ fontSize: 12, color: dark ? "#888" : T.outline, lineHeight: 1.5 }}>Based on your credit profile.</p>
               </div>
               <button className="btn-primary" style={{ width: "100%" }}>Apply Now →</button>
-              <button className="btn-secondary" style={{ width: "100%" }}>View Full Details</button>
+              <button className="btn-secondary" style={{ width: "100%" }} onClick={() => setShowModal(true)}>View Full Details</button>
               <p style={{ fontSize: 11, color: dark ? "#666" : "#bbb", lineHeight: 1.5 }}>
                 *T&C Apply. No impact on credit score to check offers.
               </p>
@@ -213,6 +214,60 @@ export default function RecommendationsPage({ dark, cards }) {
       <div style={{ marginTop: 64 }}>
         <Footer dark={dark} />
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div style={{
+          position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+          background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)",
+          zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center",
+          padding: 24,
+        }} onClick={() => setShowModal(false)}>
+          <div style={{
+            background: cardBg, width: "100%", maxWidth: 600, borderRadius: 24,
+            padding: 40, position: "relative", boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+            maxHeight: "90vh", overflowY: "auto"
+          }} onClick={e => e.stopPropagation()}>
+            <button onClick={() => setShowModal(false)} style={{
+              position: "absolute", top: 24, right: 24, width: 36, height: 36, borderRadius: "50%",
+              background: dark ? T.darkSurfaceHigh : T.surfaceLow, border: "none",
+              color: fg, fontSize: 20, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center"
+            }}>✕</button>
+            
+            <h2 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: 28, color: fg, marginBottom: 8 }}>{card.name}</h2>
+            <p style={{ color: dark ? "#aaa" : T.onSurfaceVar, marginBottom: 24 }}>Full Features & Specifications</p>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
+                <div style={{ background: dark ? T.darkSurfaceHigh : T.surfaceLow, padding: 16, borderRadius: 12 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: T.outline, marginBottom: 4 }}>ANNUAL FEE</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: fg }}>{card.fee}</div>
+                  {card.feeWaiverSpend > 0 && card.feeWaiverSpend < 9999999 && <div style={{ fontSize: 12, color: T.onSurfaceVar, marginTop: 4 }}>Waived on spend of ₹{(card.feeWaiverSpend).toLocaleString()}</div>}
+                </div>
+                <div style={{ background: dark ? T.darkSurfaceHigh : T.surfaceLow, padding: 16, borderRadius: 12 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: T.outline, marginBottom: 4 }}>REWARD TYPE</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: fg }}>{card.rewards?.type || "Benefits"}</div>
+                </div>
+            </div>
+
+            <h3 style={{ fontSize: 14, fontWeight: 700, color: fg, marginBottom: 12, letterSpacing: "0.05em" }}>ALL BENEFITS</h3>
+            <ul style={{ paddingLeft: 20, margin: 0, color: dark ? "#bbb" : T.onSurfaceVar, lineHeight: 1.6 }}>
+              {card.benefits.map((b, i) => (
+                <li key={i} style={{ marginBottom: 12 }}>{b}</li>
+              ))}
+              {card.loungeAccess && card.loungeAccess.domestic > 0 && (
+                <li style={{ marginBottom: 12 }}>{card.loungeAccess.domestic} Domestic Lounge visits (requires ₹{(card.loungeAccess.spendRule || 50000).toLocaleString()} spend in previous 3 months)</li>
+              )}
+              {card.loungeAccess && card.loungeAccess.international > 0 && (
+                <li style={{ marginBottom: 12 }}>{card.loungeAccess.international} International Lounge visits</li>
+              )}
+            </ul>
+            
+            <div style={{ display: "flex", marginTop: 32 }}>
+              <button className="btn-primary" style={{ width: "100%" }} onClick={() => setShowModal(false)}>Apply Now</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
