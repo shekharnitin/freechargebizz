@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 export default function RecommendationsPage({ dark, cards }) {
   const [active, setActive] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const bg = dark ? T.darkBg : T.surface;
   const fg = dark ? T.darkOnSurface : T.onSurface;
   const cardBg = dark ? T.darkSurface : "#fff";
@@ -265,7 +266,40 @@ export default function RecommendationsPage({ dark, cards }) {
             {card.netValue !== undefined && (
               <div style={{ marginTop: 24, padding: "16px 20px", background: `linear-gradient(135deg, ${dark ? "rgba(176,40,72,0.15)" : "#fff0f3"}, ${dark ? T.darkSurfaceHigh : T.surfaceLow})`, borderRadius: 12, border: `1px solid ${borderC}`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: T.primaryCont, letterSpacing: "0.05em" }}>ESTIMATED NET ANNUAL VALUE</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: T.primaryCont, letterSpacing: "0.05em" }}>ESTIMATED NET ANNUAL VALUE</div>
+                    <div 
+                      style={{ position: "relative", display: "flex", alignItems: "center", cursor: "help" }}
+                      onMouseEnter={() => setShowTooltip(true)}
+                      onMouseLeave={() => setShowTooltip(false)}
+                    >
+                      <div style={{
+                        width: 14, height: 14, borderRadius: "50%", border: `1px solid ${T.primaryCont}`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 10, fontWeight: 700, color: T.primaryCont, fontStyle: "italic"
+                      }}>i</div>
+                      
+                      {/* Tooltip Popup */}
+                      <div style={{
+                        position: "absolute", bottom: "100%", left: "50%", transform: "translateX(-50%)",
+                        marginBottom: 10, width: 260, padding: "12px 14px",
+                        background: dark ? "#333" : "#fff", border: `1px solid ${borderC}`,
+                        borderRadius: 8, boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+                        opacity: showTooltip ? 1 : 0, visibility: showTooltip ? "visible" : "hidden",
+                        transition: "all 0.2s", zIndex: 100, pointerEvents: "none"
+                      }}>
+                        <div style={{ fontSize: 11, color: fg, lineHeight: 1.5, fontWeight: 500, letterSpacing: "normal" }}>
+                          Net Annual Value (NAV) is calculated by estimating your yearly rewards based on your chosen spends & sectors, minus the annual fee (if not waived).
+                        </div>
+                        {/* Tooltip triangle */}
+                        <div style={{
+                          position: "absolute", top: "100%", left: "50%", transform: "translateX(-50%)",
+                          width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent",
+                          borderTop: `6px solid ${borderC}`
+                        }} />
+                      </div>
+                    </div>
+                  </div>
                   <div style={{ fontSize: 11, color: dark ? "#888" : T.outline, marginTop: 4 }}>Based on your selected spends and preferences</div>
                 </div>
                 <div style={{ fontSize: 24, fontWeight: 700, color: fg }}>₹{card.netValue.toLocaleString("en-IN")}</div>
