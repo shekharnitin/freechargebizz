@@ -35,9 +35,16 @@ export default function LandingPage({ dark, onStart }) {
             Get a personalized recommendation in 2 minutes. Maximize your rewards, grow your business, and unlock exclusive benefits.
           </p>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 12 }}>
-            <button className="btn-primary" onClick={onStart} style={{ fontSize: 13, letterSpacing: "0.08em", padding: "16px 32px" }}>
-              START YOUR PERSONALIZED SEARCH
-            </button>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <button className="btn-primary" onClick={onStart} style={{ fontSize: 13, letterSpacing: "0.08em", padding: "16px 32px" }}>
+                START YOUR PERSONALIZED SEARCH
+              </button>
+              <a href="https://drive.google.com/file/d/1BZqTQK4qBvAhODcQ1mE91WFgeRyl4qAA/view?usp=sharing" target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                <button className="btn-secondary" style={{ fontSize: 13, letterSpacing: "0.08em", padding: "16px 32px" }}>
+                  DOWNLOAD APP
+                </button>
+              </a>
+            </div>
             <span style={{ fontSize: 12, color: dark ? "#777" : T.outline, display: "flex", alignItems: "center", gap: 6 }}>
               <span>🔒</span> Free &amp; No impact on your credit score
             </span>
@@ -225,6 +232,11 @@ export default function LandingPage({ dark, onStart }) {
               <button className="btn-secondary" style={{ borderColor: "rgba(255,255,255,0.6)", color: "#fff" }}>
                 EXPLORE BUSINESS CARDS
               </button>
+              <a href="https://drive.google.com/file/d/1BZqTQK4qBvAhODcQ1mE91WFgeRyl4qAA/view?usp=sharing" target="_blank" rel="noreferrer" style={{ textDecoration: "none" }}>
+                <button className="btn-secondary" style={{ borderColor: "rgba(255,255,255,0.6)", color: "#fff" }}>
+                  DOWNLOAD APP
+                </button>
+              </a>
             </div>
           </div>
         </div>
